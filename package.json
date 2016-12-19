@@ -1,0 +1,29 @@
+{
+  "name": "mc-utils",
+  "version": "1.0.0",
+  "description": "NPM library of useful Minecraft-related utilities",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Phineas/mc-utils.git"
+  },
+  "keywords": [
+    "minecraft",
+    "utils",
+    "minecraft",
+    "server",
+    "minecraft",
+    "ping",
+    "minecraft",
+    "protocol"
+  ],
+  "author": "Phineas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Phineas/mc-utils/issues"
+  },
+  "homepage": "https://github.com/Phineas/mc-utils#readme"
+}
