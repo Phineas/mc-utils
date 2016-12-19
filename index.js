@@ -133,7 +133,7 @@ api.ping = function(server, port, callback, timeout, protocol) {
             callback(null, json);
         } catch (err) {
             // Our data is corrupt? Fail hard.
-            callback(err, null);
+            callback(new Error("Data is corrupt"), null);
 
             return;
         }
