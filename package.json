@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/Phineas/mc-utils/issues"
   },
-  "homepage": "https://github.com/Phineas/mc-utils#readme"
+  "homepage": "https://github.com/Phineas/mc-utils#readme",
+  "dependencies": {
+    "request": "^2.79.0"
+  }
 }
