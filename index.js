@@ -4,6 +4,32 @@ var pcbuffer = require("./buffer");
 
 var api = {};
 
+api.name = function(uuid, callback) {
+  if(uuid.indexOf('-') > -1) {
+    uuid = uuid.replace(/-/g, '');
+  }
+
+  request({
+    uri: 'https://api.mojang.com/user/profiles/' + uuid + '/names',
+    method: 'GET',
+    timeout: 3000
+  }, function(err, res, username) {
+    if(!username) {
+      callback(new Error("UUID does not exist"), null);
+    } else {
+      body = JSON.parse(username);
+
+      if(body.length == 1) {
+        username = body[0];
+      } else {
+        username = body[body.length - 1];
+      }
+
+      callback(username, null);
+    }
+  })
+}
+
 api.uuid = function(username, callback) {
     request({
         uri: 'https://api.mojang.com/users/profiles/minecraft/' + username,

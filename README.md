@@ -20,7 +20,19 @@ Response: `{ version: { name: 'Requires MC 1.8/1.9/1.10/1.11', protocol: 47 },
   description: '            §aHypixel Network §7§c1.8/1.9/1.10/1.11\n              §e§lHUGE MEGA WALLS UPDATE!',
   favicon: '//Favicon png response as base64' }`
 
-####Getting a UUID (example):
+####UUID -> Name (example):
+```
+utils.uuid('99d68f36-0adb-48fc-a989-e2cc1cec1878', function(err, res) {
+  if(err) {
+    console.log(err);
+  } else {
+    console.log(res);
+  }
+});
+```
+Response: `{ name: '
+
+####Name -> UUID (example):
 ```
 utils = require('mc-utils');
 
@@ -32,7 +44,7 @@ utils.uuid('Phineas', function(err, res) {
   }
 });
 ```
-Response: `{ id: '99d68f360adb48fca989e2cc1cec1878', name: 'Phineas' }`
+Response: `{ name: 'Phineas', changedToAt: 1423047291000 }` (changedToAt is the epoch timestamp of when they changed their name to that, if they've never changed their name, it won't be in the object)
 
 ##Credits
 [Cryptkeeper](https://github.com/Cryptkeeper) for the MC ping protocol
