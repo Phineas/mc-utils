@@ -25,7 +25,7 @@ api.name = function(uuid, callback) {
         username = body[body.length - 1];
       }
 
-      callback(username, null);
+      callback(null, username);
     }
   })
 }
@@ -40,7 +40,7 @@ api.uuid = function(username, callback) {
             callback(new Error("User does not exist"), null);
         } else {
             uuid = JSON.parse(uuid);
-            callback(uuid, null);
+            callback(null, uuid);
         }
     });
 }
@@ -69,7 +69,7 @@ api.status = function(type, callback) {
                 var name = Object.keys(service)[0];
 
                 if (name in services) {
-                    callback(service, null)
+                    callback(null, service)
                 }
             }
         }
