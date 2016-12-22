@@ -1,6 +1,6 @@
 {
   "name": "mc-utils",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "NPM library of useful Minecraft-related utilities",
   "main": "index.js",
   "scripts": {
@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/Phineas/mc-utils#readme",
   "dependencies": {
+    "net": "^1.0.2",
     "request": "^2.79.0"
   }
 }
