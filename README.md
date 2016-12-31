@@ -1,6 +1,9 @@
 # mc-utils
 NPM library of useful Minecraft-related utilities
 
+![stable](https://img.shields.io/npm/v/mc-utils.png?style=flat)
+[![package](http://img.shields.io/npm/mc-utils.png?style=flat)](https://www.npmjs.org/package/mc-utils)
+![downloads](https://img.shields.io/npm/dt/mc-utils.svg?style=flat)
 ##Uses
 
 ####Pinging servers (example):
