@@ -4,6 +4,10 @@ NPM library of useful Minecraft-related utilities
 ![stable](https://img.shields.io/npm/v/mc-utils.png?style=flat)
 [![package](http://img.shields.io/npm/mc-utils.png?style=flat)](https://www.npmjs.org/package/mc-utils)
 ![downloads](https://img.shields.io/npm/dt/mc-utils.svg?style=flat)
+
+##Install
+`npm i --save mc-utils`
+
 ##Uses
 
 ####Pinging servers (example):
@@ -24,7 +28,8 @@ Response: `{ version: { name: 'Requires MC 1.8/1.9/1.10/1.11', protocol: 47 },
   favicon: '//Favicon png response as base64' }`
 
 ####MOTD Formatting
-```utils = require('mc-utils');
+```
+utils = require('mc-utils');
 
 utils.parseMotD("§5An §dExample §eMOTD!", function(err, result) {
   console.log(result);
