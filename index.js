@@ -1,33 +1,36 @@
 var net = require("net");
 var request = require('request');
+var lo = require('lodash');
 var pcbuffer = require("./buffer");
 
 var api = {};
 
 api.name = function(uuid, callback) {
-  if(uuid.indexOf('-') > -1) {
-    uuid = uuid.replace(/-/g, '');
-  }
-
-  request({
-    uri: 'https://api.mojang.com/user/profiles/' + uuid + '/names',
-    method: 'GET',
-    timeout: 3000
-  }, function(err, res, username) {
-    if(!username) {
-      callback(new Error("UUID does not exist"), null);
-    } else {
-      body = JSON.parse(username);
-
-      if(body.length == 1) {
-        username = body[0];
-      } else {
-        username = body[body.length - 1];
-      }
-
-      callback(null, username);
+    //Check if input UUID is formatted, then unformats it for the request
+    if (uuid.indexOf('-') > -1) {
+        uuid = uuid.replace(/-/g, '');
     }
-  })
+
+    request({
+        uri: 'https://api.mojang.com/user/profiles/' + uuid + '/names',
+        method: 'GET',
+        timeout: 3000
+    }, function(err, res, username) {
+        if (!username) {
+            callback(new Error("UUID does not exist"), null);
+        } else {
+            body = JSON.parse(username);
+
+            //Check if they've had name changes before -> output correct name
+            if (body.length == 1) {
+                username = body[0];
+            } else {
+                username = body[body.length - 1];
+            }
+
+            callback(null, username);
+        }
+    })
 }
 
 api.uuid = function(username, callback) {
@@ -46,7 +49,7 @@ api.uuid = function(username, callback) {
 }
 
 api.status = function(type, callback) {
-
+    //Define services to check
     var services = {
         'sessionserver.mojang.com': 'Sessions',
         'authserver.mojang.com': 'Auth',
@@ -158,7 +161,6 @@ api.ping = function(server, port, callback, timeout, protocol) {
             // We parsed it, send it along!
             callback(null, json);
         } catch (err) {
-            // Our data is corrupt? Fail hard.
             callback(new Error("Data is corrupt"), null);
 
             return;
@@ -177,6 +179,98 @@ api.ping = function(server, port, callback, timeout, protocol) {
     });
 };
 
+api.parseMotD = function(motd, callback) {
+
+  rules = {
+      color: {
+  	    '§0': 'black',
+  	    '§1': 'dark-blue',
+  	    '§2': 'dark-green',
+  	    '§3': 'dark-aqua',
+  	    '§4': 'dark-red',
+  	    '§5': 'dark-purple',
+  	    '§6': 'gold',
+  	    '§7': 'gray',
+  	    '§8': 'dark-gray',
+  	    '§9': 'blue',
+  	    '§a': 'green',
+  	    '§b': 'aqua',
+  	    '§c': 'red',
+  	    '§d': 'light-purple',
+  	    '§e': 'yellow',
+  	    '§f': 'white',
+  	},
+      weight: {
+      	'§l': 'bold',
+      },
+      special: {
+      	'§k': 'magic',
+      },
+      decoration: {
+      	'§m': 'strikethrough',
+      	'§n': 'underline',
+      },
+      style: {
+      	'§o': 'italic',
+      }
+  };
+
+    if (typeof motd != 'string') {
+        return callback('Invalid MotD: Please use a string');
+    }
+
+    var res = [];
+    var cursor = -1;
+
+    function addString(cursor, motd) {
+        if (cursor == -1) {
+            cursor++
+        }
+
+        if (res[cursor]) {
+            res[cursor].motd += motd;
+        } else {
+            res[cursor] = {
+                rules: {},
+                motd: motd
+            };
+        }
+    }
+
+    for (var i = 0; i < motd.length; i++) {
+        if (motd[i] == '§') {
+            var tMtd = motd[i] + motd[i + 1];
+
+            if (tMtd == '§r') {
+                res[++cursor] = {
+                    rules: {},
+                    motd: ''
+                };
+
+                i++
+            } else {
+                var ruler = ruleEquality(tMtd);
+                if (ruler) {
+                    var newRules = res[cursor] ? lo.clone(res[cursor].rules) : {};
+                    newRules[ruler.type] = ruler.rule;
+                    res[++cursor] = {
+                        rules: newRules,
+                        motd: ''
+                    };
+                    i++
+                } else {
+                  //Append as string
+                    addString(cursor, motd[i]);
+                }
+            }
+        } else {
+            addString(cursor, motd[i]);
+        }
+    }
+
+    callback(null, res);
+};
+
 // Wraps our Buffer into another to fit the Minecraft protocol.
 function writePCBuffer(client, buffer) {
     var length = pcbuffer.createBuffer();
@@ -185,6 +279,18 @@ function writePCBuffer(client, buffer) {
     length.writeVarInt(buffer.buffer().length);
 
     client.write(Buffer.concat([length.buffer(), buffer.buffer()]));
+}
+
+function ruleEquality(string) {
+    for (var type in rules) {
+        if (rules[type][string]) {
+            return {
+                type: type,
+                rule: rules[type][string]
+            };
+        }
+    }
+    return null;
 }
 
 module.exports = api;
