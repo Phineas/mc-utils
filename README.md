@@ -23,6 +23,18 @@ Response: `{ version: { name: 'Requires MC 1.8/1.9/1.10/1.11', protocol: 47 },
   description: '            §aHypixel Network §7§c1.8/1.9/1.10/1.11\n              §e§lHUGE MEGA WALLS UPDATE!',
   favicon: '//Favicon png response as base64' }`
 
+####MOTD Formatting
+```utils = require('mc-utils');
+
+utils.parseMotD("§5An §dExample §eMOTD!", function(err, result) {
+  console.log(result);
+});
+```
+
+Response: `[ { rules: { color: 'dark-purple' }, motd: 'An ' },
+  { rules: { color: 'light-purple' }, motd: 'Example ' },
+  { rules: { color: 'yellow' }, motd: 'MOTD!' } ]`
+
 ####UUID -> Name (example):
 ```
 utils.name('99d68f36-0adb-48fc-a989-e2cc1cec1878', function(err, res) {
