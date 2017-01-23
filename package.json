@@ -1,6 +1,6 @@
 {
   "name": "mc-utils",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "NPM library of useful Minecraft-related utilities",
   "main": "index.js",
   "scripts": {
