@@ -11,7 +11,7 @@ NPM library of useful Minecraft-related utilities
 ##Uses
 
 ####Pinging servers (example):
-```
+```js
 utils = require('mc-utils');
 
 utils.ping('mc.hypixel.net', 25565, function(err, res) {
@@ -28,7 +28,7 @@ Response: `{ version: { name: 'Requires MC 1.8/1.9/1.10/1.11', protocol: 47 },
   favicon: '//Favicon png response as base64' }`
 
 ####MOTD Formatting
-```
+```js
 utils = require('mc-utils');
 
 utils.parseMotD("§5An §dExample §eMOTD!", function(err, result) {
@@ -41,7 +41,7 @@ Response: `[ { rules: { color: 'dark-purple' }, motd: 'An ' },
   { rules: { color: 'yellow' }, motd: 'MOTD!' } ]`
 
 ####UUID -> Name (example):
-```
+```js
 utils.name('99d68f36-0adb-48fc-a989-e2cc1cec1878', function(err, res) {
   if(err) {
     console.log(err);
@@ -53,7 +53,7 @@ utils.name('99d68f36-0adb-48fc-a989-e2cc1cec1878', function(err, res) {
 Response: `{ name: 'Phineas', changedToAt: 1423047291000 }` (changedToAt is the epoch timestamp of when they changed their name to that; if they've never changed their name, it won't be in the object)
 
 ####Name -> UUID (example):
-```
+```js
 utils = require('mc-utils');
 
 utils.uuid('Phineas', function(err, res) {
