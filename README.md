@@ -5,12 +5,12 @@ NPM library of useful Minecraft-related utilities
 [![package](http://img.shields.io/npm/mc-utils.png?style=flat)](https://www.npmjs.org/package/mc-utils)
 ![downloads](https://img.shields.io/npm/dt/mc-utils.svg?style=flat)
 
-##Install
+## Install
 `npm i --save mc-utils`
 
-##Uses
+## Uses
 
-####Pinging servers (example):
+#### Pinging servers (example):
 ```js
 utils = require('mc-utils');
 
@@ -27,7 +27,7 @@ Response: `{ version: { name: 'Requires MC 1.8/1.9/1.10/1.11', protocol: 47 },
   description: '            §aHypixel Network §7§c1.8/1.9/1.10/1.11\n              §e§lHUGE MEGA WALLS UPDATE!',
   favicon: '//Favicon png response as base64' }`
 
-####MOTD Formatting
+#### MOTD Formatting
 ```js
 utils = require('mc-utils');
 
@@ -40,7 +40,7 @@ Response: `[ { rules: { color: 'dark-purple' }, motd: 'An ' },
   { rules: { color: 'light-purple' }, motd: 'Example ' },
   { rules: { color: 'yellow' }, motd: 'MOTD!' } ]`
 
-####UUID -> Name (example):
+#### UUID -> Name (example):
 ```js
 utils.name('99d68f36-0adb-48fc-a989-e2cc1cec1878', function(err, res) {
   if(err) {
@@ -52,7 +52,7 @@ utils.name('99d68f36-0adb-48fc-a989-e2cc1cec1878', function(err, res) {
 ```
 Response: `{ name: 'Phineas', changedToAt: 1423047291000 }` (changedToAt is the epoch timestamp of when they changed their name to that; if they've never changed their name, it won't be in the object)
 
-####Name -> UUID (example):
+#### Name -> UUID (example):
 ```js
 utils = require('mc-utils');
 
@@ -66,5 +66,5 @@ utils.uuid('Phineas', function(err, res) {
 ```
 Response: `{ id: '99d68f360adb48fca989e2cc1cec1878', name: 'Phineas' }`
 
-##Credits
+## Credits
 [Cryptkeeper](https://github.com/Cryptkeeper) for the MC ping protocol
